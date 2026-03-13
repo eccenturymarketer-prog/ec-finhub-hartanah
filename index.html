@@ -575,7 +575,7 @@ fbq('track', 'PageView');
             const btnIcon = document.getElementById('btnIcon');
             const btnText = submitBtn.querySelector('span');
 
-            form.addEventListener('submit', async function(e) {
+            form.addEventListener('submit', function(e) {
                 e.preventDefault(); // Prevent standard page reload
 
                 // TRACK META LEAD EVENT
@@ -596,22 +596,8 @@ fbq('track', 'PageView');
                 const status = document.getElementById('status').value;
                 const negeri = document.getElementById('negeri').value;
 
-                const response = await fetch("https://script.google.com/macros/s/AKfycbx7ZT_52FLuQROYcQAdhJ5nP-3vEhjAiXsJj4hD2C20XLQLv-y3RMga1ojKtn9AyxcG/exec", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        nama,
-                        telefon,
-                        gaji,
-                        status,
-                        negeri
-                    })
-                });
-
-                const data = await response.json();
-                const selectedAgent = data.agent;
+                // Nombor WhatsApp tetap (Sila tukar jika perlu)
+                const selectedAgent = '60125134491';
 
                 // Format WhatsApp Message
                 const message = `Hi EC FINHUB,
