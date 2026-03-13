@@ -1,5 +1,23 @@
 <!DOCTYPE html>
 <html lang="ms">
+    <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];
+t=b.createElement(e);t.async=!0;
+t.src=v;
+s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '2005267956987000');
+fbq('track', 'PageView');
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,8 +112,8 @@
             <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 flex items-center gap-3">
                     <!-- Logo Image -->
-                    <img src="logo.png" alt="EC FINHUB Logo" class="h-20 w-auto object-contain">
-                    <span class="font-bold text-xl tracking-tight text-primary"></span>
+                    <img src="logo.png" alt="EC FINHUB Logo" class="h-10 w-auto object-contain">
+                    <span class="font-bold text-xl tracking-tight text-primary">EC FINHUB</span>
                 </div>
                 <div class="hidden md:flex">
                     <a href="#semak-kelayakan" class="bg-primary text-white px-6 py-2.5 rounded-full font-semibold hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
@@ -258,7 +276,7 @@
 
                 <div class="lg:w-1/2 fade-up relative">
                     <div class="absolute inset-0 bg-gradient-to-tr from-primary to-blue-800 rounded-3xl transform rotate-3 opacity-20"></div>
-                    <img src="financial consultant.jpg" alt="Financial Consultation" class="relative rounded-3xl shadow-2xl object-cover h-[500px] w-full">
+                    <img src="https://images.unsplash.com/photo-1560518846-1ea118f396af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Financial Consultation" class="relative rounded-3xl shadow-2xl object-cover h-[500px] w-full">
                     
                     <!-- Floating Stat -->
                     <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4">
@@ -568,6 +586,11 @@
             form.addEventListener('submit', function(e) {
                 e.preventDefault(); // Prevent standard page reload
 
+                // TRACK META LEAD EVENT
+                if (typeof fbq !== 'undefined') {
+                    fbq('track', 'Lead');
+                }
+
                 // UI Loading State
                 btnText.textContent = 'Memproses...';
                 btnIcon.style.display = 'none';
@@ -618,6 +641,9 @@ Mohon semakan kelayakan.`;
 
                 // Simulate slight delay for processing animation, then redirect
                 setTimeout(() => {
+                    if (typeof fbq !== 'undefined') {
+                        fbq('trackCustom', 'WhatsAppClick');
+                    }
                     window.location.href = waLink;
                     
                     // Reset button state (in case user comes back via browser back button)
