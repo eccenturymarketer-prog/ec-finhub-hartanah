@@ -569,21 +569,13 @@ fbq('track', 'PageView');
                 });
             });
 
-            // 3. Round Robin Logic & Form Submission
-            const agents = [
-                '60125134491', 
-                '60149061413', 
-                '60146951413', 
-                '60193514431'
-            ];
-
             const form = document.getElementById('leadForm');
             const submitBtn = document.getElementById('submitBtn');
             const btnSpinner = document.getElementById('btnSpinner');
             const btnIcon = document.getElementById('btnIcon');
             const btnText = submitBtn.querySelector('span');
 
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', async function(e) {
                 e.preventDefault(); // Prevent standard page reload
 
                 // TRACK META LEAD EVENT
@@ -604,6 +596,23 @@ fbq('track', 'PageView');
                 const status = document.getElementById('status').value;
                 const negeri = document.getElementById('negeri').value;
 
+                const response = await fetch("https://script.google.com/macros/s/AKfycbx7ZT_52FLuQROYcQAdhJ5nP-3vEhjAiXsJj4hD2C20XLQLv-y3RMga1ojKtn9AyxcG/exec", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        nama,
+                        telefon,
+                        gaji,
+                        status,
+                        negeri
+                    })
+                });
+
+                const data = await response.json();
+                const selectedAgent = data.agent;
+
                 // Format WhatsApp Message
                 const message = `Hi EC FINHUB,
 
@@ -620,21 +629,6 @@ Mohon semakan kelayakan.`;
 
                 // URL Encode the message
                 const encodedMessage = encodeURIComponent(message);
-
-                // Round Robin Agent Selection
-                let currentIndex = localStorage.getItem('ecfinhub_agent_index');
-                
-                if (currentIndex === null || isNaN(currentIndex)) {
-                    currentIndex = 0;
-                } else {
-                    currentIndex = parseInt(currentIndex);
-                }
-
-                const selectedAgent = agents[currentIndex];
-
-                // Update index for the NEXT lead
-                let nextIndex = (currentIndex + 1) % agents.length;
-                localStorage.setItem('ecfinhub_agent_index', nextIndex.toString());
 
                 // Generate WhatsApp Link
                 const waLink = `https://wa.me/${selectedAgent}?text=${encodedMessage}`;
